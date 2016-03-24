@@ -1,3 +1,4 @@
+Card set description:NATO phonetic alphabet
 A:Alfa
 B:Bravo
 C:Charlie

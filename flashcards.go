@@ -25,7 +25,6 @@ import "C"
 import (
 	"errors"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"math/rand"
 	"os"
@@ -89,7 +88,7 @@ func main() {
 	} else {
 		cardfile = "./nato_alph.txt"
 	}
-	io.WriteString(os.Stdout, "Flash Cards!\n")
+	msg("\nFlash Cards!\n")
 	game := &Game{}
 	game.Cards = make(map[string]string)
 	e := game.getCards()
@@ -97,9 +96,12 @@ func main() {
 		msg(e.Error())
 		return
 	}
-	game.Keys = make([]string, len(game.Cards))
+	game.Keys = make([]string, len(game.Cards)-1) //Card set description field
 	idx := -1
 	for k := range game.Cards {
+		if k == "Card set description" {
+			continue
+		}
 		idx++
 		game.Keys[idx] = k
 	}
@@ -107,6 +109,7 @@ func main() {
 	flashes := len(game.Keys)
 	tries := 0
 
+	msg("Learning this: " + game.Cards["Card set description"])
 	for len(game.Keys) > 0 {
 		tries++
 		key, keyIdx := game.getRandomKey()
@@ -114,11 +117,11 @@ func main() {
 		var answer string
 		fmt.Scanln(&answer)
 		//msg("" + strings.TrimSpace(answer) + "-a|")
-		if game.Cards[key] == answer {
+		if strings.ToLower(game.Cards[key]) == strings.ToLower(answer) {
 			msg("Correct!")
 			game.Keys = append(game.Keys[:keyIdx], game.Keys[keyIdx+1:]...)
 		} else {
-			msg("Wrong!")
+			msg("Wrong! Correct answer is: " + game.Cards[key])
 		}
 	}
 	fmt.Printf("\nIt took %d tries for %d questions\n", tries, flashes)
