@@ -43,9 +43,9 @@ type Game struct {
 }
 
 var game Game
+var cardfile string
 
 func (game *Game) getCards() error {
-	cardfile := "./nato_alph.txt"
 	content_b, e := ioutil.ReadFile(cardfile)
 	if e != nil {
 		msg_ := fmt.Sprintf("Sorry. %q does not exist", cardfile)
@@ -84,6 +84,11 @@ func (game *Game) getRandomKey() (string, int) {
 }
 
 func main() {
+	if len(os.Args) > 1 {
+		cardfile = os.Args[1]
+	} else {
+		cardfile = "./nato_alph.txt"
+	}
 	io.WriteString(os.Stdout, "Flash Cards!\n")
 	game := &Game{}
 	game.Cards = make(map[string]string)
