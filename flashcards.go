@@ -91,6 +91,12 @@ func main() {
 
 	msg("==== cardfile: " + cardfile)
 
+	if _, err := os.Stat(cardfile); os.IsNotExist(err) {
+		msg("Cardfile does not exist")
+	} else {
+		msg("Cardfile does exist")
+	}
+
 	msg("\nFlash Cards!\n")
 	game := &Game{}
 	game.Cards = make(map[string]string)
