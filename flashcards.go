@@ -106,6 +106,7 @@ func main() {
 		return
 	}
 	game.Keys = make([]string, len(game.Cards)-1) //Card set description field
+	log.Printf("Keys: %v", game.Keys)
 	idx := -1
 	for k := range game.Cards {
 		if k == "Card set description" {
