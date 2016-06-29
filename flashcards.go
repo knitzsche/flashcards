@@ -26,7 +26,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"math/rand"
 	"os"
 	"strings"
@@ -84,21 +83,17 @@ func (game *Game) getRandomKey() (string, int) {
 }
 
 func main() {
+	msg("\nLearnit with Flash Cards!\n")
 	if len(os.Args) > 1 {
 		cardfile = os.Args[1]
 	} else {
 		cardfile = "./nato_alph.txt"
 	}
-
-	msg("==== cardfile: " + cardfile)
-
 	if _, err := os.Stat(cardfile); os.IsNotExist(err) {
-		msg("Cardfile does not exist")
-	} else {
-		msg("Cardfile does exist")
+		noCardfile := fmt.Sprintf("Sorry, cardfile %q does not exist. Stopping", cardfile)
+		msg(noCardfile)
+		return
 	}
-
-	msg("\nFlash Cards!\n")
 	game := &Game{}
 	game.Cards = make(map[string]string)
 	e := game.getCards()
@@ -106,18 +101,21 @@ func main() {
 		msg(e.Error())
 		return
 	}
-	log.Printf("Cards: %v", game.Cards)
 	game.Keys = make([]string, len(game.Cards)-1) //Card set description field
 	idx := -1
+	descFound := false
 	for k := range game.Cards {
 		if k == "Card set description" {
+			descFound = true
 			continue
 		}
 		idx++
 		game.Keys[idx] = k
 	}
-
-	log.Printf("Keys: %v", game.Keys)
+	if !descFound {
+		msg("Sorry, card file is not valid. Stopping")
+		return
+	}
 	flashes := len(game.Keys)
 	tries := 0
 
