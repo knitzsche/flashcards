@@ -26,6 +26,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"math/rand"
 	"os"
 	"strings"
@@ -106,7 +107,6 @@ func main() {
 		return
 	}
 	game.Keys = make([]string, len(game.Cards)-1) //Card set description field
-	log.Printf("Keys: %v", game.Keys)
 	idx := -1
 	for k := range game.Cards {
 		if k == "Card set description" {
@@ -116,6 +116,7 @@ func main() {
 		game.Keys[idx] = k
 	}
 
+	log.Printf("Keys: %v", game.Keys)
 	flashes := len(game.Keys)
 	tries := 0
 
