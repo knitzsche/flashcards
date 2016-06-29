@@ -88,6 +88,9 @@ func main() {
 	} else {
 		cardfile = "./nato_alph.txt"
 	}
+
+	msg("==== cardfile: " + cardfile)
+
 	msg("\nFlash Cards!\n")
 	game := &Game{}
 	game.Cards = make(map[string]string)
