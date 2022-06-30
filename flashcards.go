@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 201^ Canonical Ltd
+ * Copyright (C) 2022 Kyle Nitzsche 
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as
@@ -10,17 +10,9 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * * Authored by:
- *	Kyle Nitzsche <kyle.nitzsche@canonical.com>
  */
 
 package main
-
-//#include <locale.h>
-//#include <libintl.h>
-import "C"
 
 import (
 	"errors"
